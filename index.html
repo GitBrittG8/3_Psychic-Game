@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>The Psychic Game</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+        <script src="assets/javascript/game.js"></script>
+    </head>
+    <body>
+        <h1>The Psychic Game</h1>
+        <h2>Guess what letter I have stored...</h2>
+        <p>Type in a letter!</p>
+        
+            <input type="text" id="inputArea" onkeyup="myFunction()">
+
+        <div>
+            <p id="Stats1"></p>
+            <p id="Stats2"></p>
+            <p id="Stats3"></p>
+            <p id="Stats4"></p>
+        </div>
+        <div>
+            <p id="guessedWrongArea">
+                Used Letters:
+            </p>
+
+            <p id="guessedRightArea">
+                Correct Letters:
+            </p>
+        </div>
+
+        
+        <script type="text/javascript">
+
+            var guessedLetters = ""
+            var wins = "Fox";
+            var losses = "Turtle";
+            var guessesMade = "Tiger";
+            var guessesLeft = "Bear";
+            var storedLetter = ["v", "l", "m"];
+            var userGuess = prompt("Which letter have I stored?");
+
+
+            // Converts the user's answer to lowercase.
+            var userGuessLower = userGuess.toLowerCase();
+
+            document.getElementById("Stats1").innerHTML = ("Number of Wins: "+ wins);
+            document.getElementById("Stats2").innerHTML = ("Number of Losses: "+ losses);
+            document.getElementById("Stats3").innerHTML = ("Number of Guesses Made: "+ guessesMade);
+            document.getElementById("Stats4").innerHTML = ("Number of Guesses Left: "+ guessesLeft);
+            
+
+            // Now we check the userGuess array to see if it contains the user's answer.
+            // If the user's band is not in the array...
+
+                function myFunction() {
+            var x = document.getElementById("inputArea").value;
+            document.getElementById("guessedWrongArea").innerHTML = x;
+            }
+
+            if (storedLetter.indexOf(userGuessLower) === -1) {
+                alert("You Lose!");
+            }
+            // If it is in the array...
+            else {
+                alert("You Win!!");
+            }
+            
+            //Console Section
+            console.log(wins);
+            console.log(losses);
+            console.log(guessesMade);
+            console.log(guessesLeft);
+            console.log(storedLetter[i]);
+      
+        </script>
+    </body>
+</html>
