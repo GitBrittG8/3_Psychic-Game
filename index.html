@@ -1,80 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>The Psychic Game</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
-        <script src="assets/javascript/game.js"></script>
-    </head>
-    <body>
-        <h1>The Psychic Game</h1>
-        <h2>Guess what letter I have stored...</h2>
-        <p>Type in a letter!</p>
-        
-            <input type="text" id="inputArea" onkeyup="myFunction()">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>The Psychic Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="assets/javascript/script.js"></script>
+</head>
 
-        <div>
-            <p id="Stats1"></p>
-            <p id="Stats2"></p>
-            <p id="Stats3"></p>
-            <p id="Stats4"></p>
-        </div>
-        <div>
-            <p id="guessedWrongArea">
-                Used Letters:
-            </p>
+<body>
 
-            <p id="guessedRightArea">
-                Correct Letters:
-            </p>
+    <div id="mainContent">
+
+        <header>
+            <h1>The Psychic Game</h1>
+        </header>
+
+        <div id="directionsArea">
+            <h2>Guess what letter I have stored...</h2>
+            <p>Type in a letter!</p>
         </div>
 
+        <div id="statsArea">
+            <p>Wins: <span id="wins">0</span></p>
+            <p>Losses: <span id="losses">0</span>
+            <p>Guesses Left: <span id="guesses-left"></span></p>
+            <p>Your Guesses so far: <span id="guesses-so-far"></span></p>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+            // VARIABLES
+
+        var letters = ["v", "l", "m", "x", "z"];
+        var guessedLetters = [];
+        var letterToGuess = null;
+        var guessesLeft = 9;
+        var wins = 0;
+        var losses = 0;
+
+
+
+            // FUNCTIONS
+
+        var updateGuessesLeft = function() {
+        document.querySelector("#guesses-left").innerHTML = guessesLeft; //Grabs html element, assigns it
+        };
+
+        var updateLetterToGuess = function() {
+        letterToGuess = letters[Math.floor(Math.random() * letters.length)]; //Assign letterToGuess from array
+        };
+
+        var updateGuessesSoFar = function() {
+        document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(", "); // Display guessed letters.
+        };
+
+        var reset = function() {  // Reset Function
+        guessesLeft = 9;
+        guessedLetters = [];
+        updateLetterToGuess();
+        updateGuessesLeft();
+        updateGuessesSoFar();
+        };
+
+
+            // On page load.
+        updateLetterToGuess();
+        updateGuessesLeft();
+
+        document.onkeyup = function(event) { // Capture the keyboard clicks.
+
+            guessesLeft--; // Reduce by one.
+            var letter = String.fromCharCode(event.keyCode).toLowerCase(); // To Lowercase
+            guessedLetters.push(letter);  // Add the guess to the guessedLetters array
+
+            updateGuessesLeft(); // call Update functions
+            updateGuessesSoFar();
+
+            if (letter === letterToGuess) { // Check if match.
+
+                wins++; // If so, we win. Update and Display
+                document.querySelector("#wins").innerHTML = wins;
+                reset(); // Call reset function
+            }
+
+
+
+            if (guessesLeft === 0) {  // If no guesses...
+
+                losses++; // Update and display.
+                document.querySelector("#losses").innerHTML = losses;
+                reset(); //Call Reset
+            }
+        };
         
-        <script type="text/javascript">
-
-            var guessedLetters = ""
-            var wins = "Fox";
-            var losses = "Turtle";
-            var guessesMade = "Tiger";
-            var guessesLeft = "Bear";
-            var storedLetter = ["v", "l", "m"];
-            var userGuess = prompt("Which letter have I stored?");
-
-
-            // Converts the user's answer to lowercase.
-            var userGuessLower = userGuess.toLowerCase();
-
-            document.getElementById("Stats1").innerHTML = ("Number of Wins: "+ wins);
-            document.getElementById("Stats2").innerHTML = ("Number of Losses: "+ losses);
-            document.getElementById("Stats3").innerHTML = ("Number of Guesses Made: "+ guessesMade);
-            document.getElementById("Stats4").innerHTML = ("Number of Guesses Left: "+ guessesLeft);
-            
-
-            // Now we check the userGuess array to see if it contains the user's answer.
-            // If the user's band is not in the array...
-
-                function myFunction() {
-            var x = document.getElementById("inputArea").value;
-            document.getElementById("guessedWrongArea").innerHTML = x;
-            }
-
-            if (storedLetter.indexOf(userGuessLower) === -1) {
-                alert("You Lose!");
-            }
-            // If it is in the array...
-            else {
-                alert("You Win!!");
-            }
-            
-            //Console Section
-            console.log(wins);
-            console.log(losses);
-            console.log(guessesMade);
-            console.log(guessesLeft);
-            console.log(storedLetter[i]);
-      
-        </script>
-    </body>
+    </script>
+</body>
 </html>
